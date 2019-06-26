@@ -1,4 +1,4 @@
-import { HANDLE_CHANGE, ADD_TODO, TOGGLE_COMPLETED } from './types';
+import { HANDLE_CHANGE, ADD_TODO, TOGGLE_COMPLETED } from '../actions/types';
 
 export const handleChange = value => ({
   type: HANDLE_CHANGE,

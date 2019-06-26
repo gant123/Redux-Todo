@@ -1,19 +1,39 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import { Provider } from 'react-redux';
+import Todos from './components/todos';
+import { connect } from 'react-redux';
+import TodoForm from './components/todoForm';
+import { handleChange, addTodo, toggleCompleted } from './actions/todoActions';
 
-import store from './components/store';
-
-function App() {
-  return (
-    <Provider store={store}>
+class App extends Component {
+  handleEvent(e) {
+    this.props.handleChange(e.target.value);
+  }
+  render() {
+    return (
       <div className="App">
-        <header className="App-header">
-          <p>Welcome to React</p>
-        </header>
+        <Todos
+          toggleCompleted={this.props.toggleCompleted}
+          todos={this.props.todos}
+        />
+        <TodoForm
+          handleChange={this.handleEvent.bind(this)}
+          addTodo={this.props.addTodo}
+          inputText={this.props.inputText}
+        />
       </div>
-    </Provider>
-  );
+    );
+  }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    todos: state.todos,
+    inputText: state.inputText
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  { handleChange, addTodo, toggleCompleted }
+)(App);
